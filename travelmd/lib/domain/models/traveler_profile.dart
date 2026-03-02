@@ -1,15 +1,22 @@
 class TravelerProfile {
+  final String? nickname;
   final int ageYears;
-  final bool pregnant;
-  final bool immunocompromised;
-  final bool vfr;
+  final bool isPregnant;
+  final bool isImmunocompromised;
+  final bool isVFR;
   final String purpose;
 
   TravelerProfile({
+    this.nickname,
     required this.ageYears,
-    this.pregnant = false,
-    this.immunocompromised = false,
-    this.vfr = false,
-    this.purpose = '',
+    this.isPregnant = false,
+    this.isImmunocompromised = false,
+    this.isVFR = false,
+    this.purpose = 'tourism',
   });
+
+  /// For backward compatibility
+  bool get pregnant => isPregnant;
+  bool get immunocompromised => isImmunocompromised;
+  bool get vfr => isVFR;
 }
