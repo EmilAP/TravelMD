@@ -1,0 +1,99 @@
+countries:
+  AGO:
+    endemic: true
+  ARG:
+    endemic: false
+  AUS:
+    endemic: false
+  AUT:
+    endemic: false
+  BDI:
+    endemic: true
+  BEN:
+    endemic: true
+  BFA:
+    endemic: true
+  BGD:
+    endemic: true
+  BRA:
+    endemic: true
+  BWA:
+    endemic: false
+  CAF:
+    endemic: true
+  CAN:
+    endemic: false
+  CHN:
+    endemic: true
+  COG:
+    endemic: true
+  COL:
+    endemic: true
+  CUB:
+    endemic: false
+  DZA:
+    endemic: true
+  ECU:
+    endemic: true
+  EGY:
+    endemic: true
+  FRA:
+    endemic: false
+  GBR:
+    endemic: false
+  GHA:
+    endemic: true
+  GIN:
+    endemic: true
+  GMB:
+    endemic: true
+  GTM:
+    endemic: true
+  HND:
+    endemic: true
+  IND:
+    endemic: true
+  IDN:
+    endemic: true
+  JAM:
+    endemic: true
+  KEN:
+    endemic: true
+  MEX:
+    endemic: true
+  MOZ:
+    endemic: true
+  NAM:
+    endemic: false
+  NER:
+    endemic: true
+  NGA:
+    endemic: true
+  PAK:
+    endemic: true
+  PER:
+    endemic: true
+  PHL:
+    endemic: true
+  PRY:
+    endemic: true
+  SEN:
+    endemic: true
+  SLE:
+    endemic: true
+  THA:
+    endemic: true
+  TZA:
+    endemic: true
+  UGA:
+    endemic: true
+  USA:
+    endemic: false
+  VEN:
+    endemic: true
+  ZAF:
+    endemic: true
+  ZMB:
+    endemic: true
+  ZWE:
+    endemic: true

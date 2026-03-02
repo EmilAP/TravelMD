@@ -1,0 +1,31 @@
+sources:
+  who_rabies:
+    title: "Rabies fact sheet"
+    organization: "World Health Organization (WHO)"
+    url: "https://www.who.int/news-room/fact-sheets/detail/rabies"
+    lastReviewed: "2025-12-01"
+  cdc_rabies_prevention:
+    title: "Rabies prevention & post-exposure prophylaxis"
+    organization: "Centers for Disease Control and Prevention (CDC)"
+    url: "https://www.cdc.gov/rabies/prevention/index.html"
+    lastReviewed: "2025-10-15"
+  phac_rabies:
+    title: "Rabies: For health professionals"
+    organization: "Public Health Agency of Canada (PHAC)"
+    url: "https://www.canada.ca/en/public-health/services/diseases/rabies.html"
+    lastReviewed: "2025-11-20"
+  travellers_health_rabies:
+    title: "Rabies and the traveller"
+    organization: "Travellers' Health (International Society of Travel Medicine)"
+    url: "https://www.istm.org"
+    lastReviewed: "2025-09-10"
+  nhs_rabies:
+    title: "Rabies: Symptoms and treatment"
+    organization: "National Health Service (NHS)"
+    url: "https://www.nhs.uk/conditions/rabies/"
+    lastReviewed: "2025-08-30"
+  paho_rabies:
+    title: "Rabies in the Americas"
+    organization: "Pan American Health Organization (PAHO)"
+    url: "https://www.paho.org"
+    lastReviewed: "2025-11-05"

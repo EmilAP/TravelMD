@@ -1,0 +1,137 @@
+cards:
+  # ===== PREVENTION (Primary) =====
+  - id: "rabies_prevent_avoid_animals"
+    title: "Avoid contact with animals"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Stray dogs, cats, and wildlife in some countries carry rabies. Keep your distance and never approach or pet unfamiliar animals."
+    whyThisMatters: "Most rabies cases start with a bite or scratch from an infected animal. Prevention is the best protection."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Do not pet, feed, or touch stray animals"
+        details: "This includes street dogs, cats, and monkeys—even if they seem friendly."
+      - label: "Avoid picking up wounded animals"
+        details: "A sick animal is more likely to bite. Let local authorities handle injured wildlife."
+      - label: "Keep distance from wildlife"
+        details: "Stray dogs and bats are common rabies carriers in some regions."
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_prevent_kids_supervision"
+    title: "Supervise children closely around animals"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Children may not recognize danger and may approach animals. Keep close watch when outdoors."
+    whyThisMatters: "Children are at higher risk of bites because they are curious and less cautious around animals."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Never let children approach unfamiliar animals alone"
+      - label: "Teach children that stray animals may bite"
+        details: "Explain in age-appropriate language why animals are not safe to touch."
+      - label: "Keep children indoors at dusk and dawn"
+        details: "Peak hours for bats and other animals in some regions."
+    sourceRefs: ["cdc_rabies_prevention", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_prevent_no_feed_touch"
+    title: "Never feed or touch street dogs and cats"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Feeding stray animals, even to show kindness, increases the risk of bite or scratch."
+    whyThisMatters: "When animals become comfortable with humans, they may bite if startled or protective of food."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Do not offer food or water to stray animals"
+      - label: "Avoid eye contact with aggressive-looking animals"
+      - label: "Back away slowly if an animal approaches"
+    sourceRefs: ["who_rabies", "cdc_rabies_prevention"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_prevent_bats_in_room"
+    title: "Keep bats out of sleeping areas"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Bats sometimes enter rooms and can bite silently. Seal gaps and keep windows closed at night."
+    whyThisMatters: "Bat bites are small and may go unnoticed, but they can transmit rabies."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Check for gaps around windows and doors before sleeping"
+      - label: "Sleep under a mosquito net in regions with bats"
+      - label: "If a bat is in your room, do not touch it—leave the room and call for help"
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies"]
+    lastReviewed: "2026-03-01"
+
+  # ===== PREPAREDNESS (Secondary, pre-travel) =====
+  - id: "rabies_prepare_know_where_to_go"
+    title: "Know where to find rabies care before you go"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Before departure, research vaccination clinics, hospitals, and emergency services at your destination."
+    whyThisMatters: "In a rabies emergency, quick access to post-exposure care can save your life. Knowing where to go beforehand saves critical time."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Research local hospitals and clinics near your accommodation"
+      - label: "Get contact numbers for your hotel/embassy and local emergency services"
+      - label: "Confirm that post-exposure vaccines are available locally"
+      - label: "Consider travel insurance that covers rabies care"
+    sourceRefs: ["cdc_rabies_prevention", "travellers_health_rabies", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_prepare_consider_preexposure_vaccine"
+    title: "Modern rabies vaccines are safe and highly effective"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "If you are at high risk (vet, wildlife worker, extended travel in endemic areas), discuss pre-exposure vaccination with your doctor."
+    whyThisMatters: "Pre-exposure vaccination simplifies post-exposure care and is a strong layer of protection if exposure occurs."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Your doctor can discuss options before travel"
+        details: "Pre-exposure vaccines are given as a series. Talk to your travel clinic."
+      - label: "If you receive pre-exposure vaccination, keep records"
+      - label: "Even with pre-exposure vaccine, seek immediate care if exposed"
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  # ===== EXPOSURE RESPONSE (Secondary, only if exposure occurs) =====
+  - id: "rabies_exposure_wound_wash_now"
+    title: "Wash the wound immediately with soap and water"
+    pillar: "exposure_response"
+    urgency: "urgent"
+    summary: "If you were bitten, scratched, or have saliva on a wound or mucous membrane, wash thoroughly right away with soap and water for 15 minutes."
+    whyThisMatters: "Immediate wound washing reduces the virus load and is the first critical step in rabies prevention."
+    whenToDoIt: "now"
+    steps:
+      - label: "Use clean running water and soap"
+        details: "Wash for at least 15 minutes."
+      - label: "Apply iodine solution or 70% alcohol if available"
+      - label: "Do not delay seeking medical care to finish washing"
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_exposure_seek_care_now"
+    title: "Seek medical care immediately"
+    pillar: "exposure_response"
+    urgency: "urgent"
+    summary: "After any bite, scratch, or exposure, go to a clinic or hospital as soon as possible. Rabies post-exposure care must start quickly."
+    whyThisMatters: "Time is critical in rabies. Post-exposure prophylaxis (PEP) is highly effective when given promptly after exposure."
+    whenToDoIt: "now"
+    steps:
+      - label: "Go to the nearest clinic or hospital immediately"
+      - label: "Tell the doctor about the animal and the type of exposure"
+      - label: "Do not wait for symptoms to appear"
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies", "phac_rabies"]
+    lastReviewed: "2026-03-01"
+
+  - id: "rabies_exposure_reassure_no_risk"
+    title: "Some exposures carry very low risk"
+    pillar: "exposure_response"
+    urgency: "routine"
+    summary: "If an animal licked your intact skin (no cuts or sores), or if you only touched the fur, your risk is extremely low. Wash and seek care if concerned."
+    whyThisMatters: "Not all animal contact means rabies risk. Understanding which exposures are high-risk helps you respond appropriately."
+    whenToDoIt: "now"
+    steps:
+      - label: "Wash the area with soap and water"
+      - label: "Seek medical advice if you are unsure or anxious"
+      - label: "Remember: healthy skin is an effective barrier"
+    sourceRefs: ["cdc_rabies_prevention", "who_rabies"]
+    lastReviewed: "2026-03-01"
