@@ -104,6 +104,23 @@ class _RabiesExposureWizardScreenState
 
       ref.read(planProvider.notifier).updatePlan(updatedPlan);
 
+      // Persist plan selection for this trip+traveler
+      final tripId = ref.read(tripIsarIdProvider);
+      final travelerId = ref.read(travelerIsarIdProvider);
+      if (tripId != null && travelerId != null) {
+        try {
+          final storage = await ref.read(storageRepositoryProvider.future);
+          final selectedCardIds = updatedPlan.cards.map((c) => c.id).toList();
+          await storage.savePlanSelection(
+            tripId: tripId,
+            travelerId: travelerId,
+            selectedCardIds: selectedCardIds,
+          );
+        } catch (e) {
+          debugPrint('Error persisting exposure plan selection: $e');
+        }
+      }
+
       if (!mounted) return;
       Navigator.of(context).pop(); // Close loading dialog
       context.go('/trip/traveler/plan');

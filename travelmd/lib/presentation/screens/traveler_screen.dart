@@ -34,7 +34,7 @@ class _TravelerScreenState extends ConsumerState<TravelerScreen> {
     super.dispose();
   }
 
-  void _saveTraveler() {
+  void _saveTraveler() async {
     final nick = _nickController.text.trim().isEmpty ? 'Traveler' : _nickController.text.trim();
     final ageStr = _ageController.text.trim();
 
@@ -61,6 +61,24 @@ class _TravelerScreenState extends ConsumerState<TravelerScreen> {
       isVFR: _isVFR,
       purpose: _purpose,
     );
+
+    // Save traveler to database
+    try {
+      final storage = await ref.read(storageRepositoryProvider.future);
+      final travelerId = await storage.saveTraveler(traveler);
+      
+      // Store Isar ID for plan selection persistence
+      ref.read(travelerIsarIdProvider.notifier).setId(travelerId);
+      
+      // Invalidate saved travelers cache
+      ref.invalidate(savedTravelersProvider);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving traveler: $e')),
+      );
+      return;
+    }
 
     ref.read(travelerProvider.notifier).setTraveler(traveler);
     context.go('/trip/traveler/plan');

@@ -15,6 +15,16 @@ class PlanScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final planAsync = ref.watch(preventionPlanProvider);
     final trip = ref.watch(tripProvider);
+    final tripId = ref.watch(tripIsarIdProvider);
+    final travelerId = ref.watch(travelerIsarIdProvider);
+    final persistedChecklistAsync = ref.watch(persistedChecklistStateProvider);
+
+    // Initialize checklist state from persistent storage when it loads
+    persistedChecklistAsync.whenData((checklistState) {
+      if (checklistState.isNotEmpty) {
+        ref.read(checklistStateProvider.notifier).loadState(checklistState);
+      }
+    });
 
     return Scaffold(
       appBar: AppBar(
@@ -30,6 +40,25 @@ class PlanScreen extends ConsumerWidget {
           ),
         ),
         data: (plan) {
+          // Save plan selection to storage when first loaded
+          if (tripId != null && travelerId != null && plan.checklist.isNotEmpty) {
+            WidgetsBinding.instance.addPostFrameCallback((_) async {
+              try {
+                final storage = await ref.read(storageRepositoryProvider.future);
+                final selectedCardIds =
+                    plan.cards.map((card) => card.id).toList();
+                await storage.savePlanSelection(
+                  tripId: tripId,
+                  travelerId: travelerId,
+                  selectedCardIds: selectedCardIds,
+                );
+              } catch (e) {
+                // Log error but don't block UI
+                debugPrint('Error saving plan selection: $e');
+              }
+            });
+          }
+
           if (plan.cards.isEmpty) {
             return Center(
               child: Padding(
@@ -307,30 +336,46 @@ class _CardWidgetState extends State<_CardWidget> {
 }
 
 /// Checklist item widget.
-class _ChecklistItemWidget extends StatefulWidget {
+class _ChecklistItemWidget extends ConsumerWidget {
   final dynamic item; // ChecklistItem
 
   const _ChecklistItemWidget({required this.item});
 
   @override
-  State<_ChecklistItemWidget> createState() => _ChecklistItemWidgetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final checklistState = ref.watch(checklistStateProvider);
+    final isDone = checklistState[item.id as String] ?? false;
+    final tripId = ref.watch(tripIsarIdProvider);
+    final travelerId = ref.watch(travelerIsarIdProvider);
 
-class _ChecklistItemWidgetState extends State<_ChecklistItemWidget> {
-  late bool _isDone;
-
-  @override
-  void initState() {
-    super.initState();
-    _isDone = false;
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return CheckboxListTile(
-      title: Text(widget.item.label as String),
-      value: _isDone,
-      onChanged: (val) => setState(() => _isDone = val ?? false),
+      title: Text(item.label as String),
+      value: isDone,
+      onChanged: (val) async {
+        final itemId = item.id as String;
+        ref.read(checklistStateProvider.notifier).toggleItem(itemId);
+
+        // Persist to storage
+        if (tripId != null && travelerId != null) {
+          try {
+            final storage = await ref.read(storageRepositoryProvider.future);
+            // Get plan selection ID
+            final planSelection =
+                await storage.loadPlanSelection(tripId: tripId, travelerId: travelerId);
+            if (planSelection != null && planSelection.id != null) {
+              final newIsDone = !(isDone);
+              await storage.saveChecklistItemState(
+                planSelectionId: planSelection.id!,
+                itemId: itemId,
+                isDone: newIsDone,
+              );
+            }
+          } catch (e) {
+            // Log but don't fail UI
+            debugPrint('Error persisting checklist state: $e');
+          }
+        }
+      },
       controlAffinity: ListTileControlAffinity.leading,
     );
   }

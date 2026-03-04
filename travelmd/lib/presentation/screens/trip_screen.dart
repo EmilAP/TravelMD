@@ -50,7 +50,7 @@ class _TripScreenState extends ConsumerState<TripScreen> {
     }
   }
 
-  void _saveTrip() {
+  void _saveTrip() async {
     final dest = _destController.text.trim().toUpperCase();
     if (dest.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -70,6 +70,24 @@ class _TripScreenState extends ConsumerState<TripScreen> {
       returnDate: _returnDate ?? DateTime.now().add(const Duration(days: 7)),
       transitCountries: transit,
     );
+
+    // Save trip to database
+    try {
+      final storage = await ref.read(storageRepositoryProvider.future);
+      final tripId = await storage.saveTrip(trip);
+      
+      // Store Isar ID for plan selection persistence
+      ref.read(tripIsarIdProvider.notifier).setId(tripId);
+      
+      // Invalidate saved trips cache
+      ref.invalidate(savedTripsProvider);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error saving trip: $e')),
+      );
+      return;
+    }
 
     ref.read(tripProvider.notifier).setTrip(trip);
     context.go('/trip/traveler');
