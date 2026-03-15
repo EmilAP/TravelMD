@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travelmd/presentation/providers/app_providers.dart';
 import 'package:travelmd/presentation/screens/content_load_error_screen.dart';
+import 'package:travelmd/presentation/theme/app_theme.dart';
+import 'package:travelmd/presentation/widgets/app_ui.dart';
 
 /// Home screen: entry point with two primary CTAs.
 /// 1. Plan a trip (prevention-first flow)
@@ -30,114 +32,188 @@ class HomeScreen extends ConsumerWidget {
         return Scaffold(
           appBar: AppBar(
             title: const Text('TravelMD'),
-            centerTitle: true,
           ),
           body: SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Main CTAs
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Stay Safe While Traveling',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFF0D5E63), Color(0xFF2C8C7A)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  ElevatedButton.icon(
-                    onPressed: () => context.go('/trip'),
-                    icon: const Icon(Icons.map),
-                    label: const Text('Plan a New Trip'),
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 32,
-                        vertical: 16,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.brand.withOpacity(0.22),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
                       ),
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                    ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  OutlinedButton.icon(
-                    onPressed: () => context.go('/trip/traveler/plan/exposure'),
-                    icon: const Icon(Icons.warning),
-                    label: const Text('Animal Bite or Exposure?'),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 16,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 48),
-
-            // Saved Trips Section
-            savedTripsAsync.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (err, stack) => Text('Error loading trips: $err'),
-              data: (trips) {
-                if (trips.isEmpty) {
-                  return const SizedBox.shrink();
-                }
-
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Continue Your Plans',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    ...trips.map((trip) {
-                      return Card(
-                        child: ListTile(
-                          leading: const Icon(Icons.location_on),
-                          title: Text(trip.destinationCountry),
-                          subtitle: Text(
-                            '${trip.departDate.month}/${trip.departDate.day} - ${trip.returnDate.month}/${trip.returnDate.day}',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Icon(Icons.health_and_safety, color: Colors.white),
+                          SizedBox(width: 8),
+                          Text(
+                            'TRAVEL HEALTH INTELLIGENCE',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 12,
+                              letterSpacing: 0.8,
+                            ),
                           ),
-                          trailing: const Icon(Icons.chevron_right),
-                          onTap: () {
-                            // Load trip and go to plan
-                            ref.read(tripProvider.notifier).setTrip(trip);
-                            context.go('/trip/traveler/plan');
-                          },
+                        ],
+                      ),
+                      const SizedBox(height: 14),
+                      const Text(
+                        'Plan ahead, travel safer, and know what to do if exposure happens.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        'TravelMD combines pre-travel preparedness with emergency rabies exposure guidance for decisions under uncertainty.',
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.92),
+                          fontSize: 14,
+                          height: 1.4,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                SurfaceCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SectionHeader(
+                        title: 'Start Here',
+                        subtitle: 'Choose a planning or triage workflow',
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton.icon(
+                          onPressed: () => context.go('/trip'),
+                          icon: const Icon(Icons.flight_takeoff),
+                          label: const Text('Plan a Trip'),
+                        ),
+                      ),
+                      const SizedBox(height: AppSpacing.sm),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () => context.go('/trip/traveler/plan/exposure'),
+                          icon: const Icon(Icons.warning_amber_rounded),
+                          label: const Text('Animal Exposure'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.lg),
+                SectionHeader(
+                  title: 'Recent Trips',
+                  subtitle: 'Continue saved plan contexts',
+                  trailing: Icon(
+                    Icons.history,
+                    color: Colors.teal.shade700,
+                    size: 20,
+                  ),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                savedTripsAsync.when(
+                  loading: () => const Padding(
+                    padding: EdgeInsets.symmetric(vertical: AppSpacing.lg),
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+                  error: (err, stack) => SurfaceCard(
+                    child: Text('Error loading trips: $err'),
+                  ),
+                  data: (trips) {
+                    if (trips.isEmpty) {
+                      return EmptyStateCard(
+                        icon: Icons.luggage_outlined,
+                        title: 'No saved trip contexts yet',
+                        message:
+                            'Start your first travel health plan and your recent trips will appear here for quick continuation.',
+                        action: ElevatedButton.icon(
+                          onPressed: () => context.go('/trip'),
+                          icon: const Icon(Icons.add),
+                          label: const Text('Create First Plan'),
                         ),
                       );
-                    }).toList(),
-                  ],
-                );
-              },
-            ),
+                    }
 
-            const SizedBox(height: 48),
-            Center(
-              child: const Text(
-                'Prevention first. Millions of deaths prevented with timely action.',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                  fontStyle: FontStyle.italic,
+                    return Column(
+                      children: trips.map((trip) {
+                        final dateLabel =
+                            '${trip.departDate.month}/${trip.departDate.day} - ${trip.returnDate.month}/${trip.returnDate.day}';
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                          child: SurfaceCard(
+                            child: ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: Container(
+                                width: 44,
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: AppColors.brandSoft,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(Icons.public, color: AppColors.brand),
+                              ),
+                              title: Text(
+                                trip.destinationCountry,
+                                style: const TextStyle(fontWeight: FontWeight.w700),
+                              ),
+                              subtitle: Text(
+                                dateLabel,
+                                style: const TextStyle(height: 1.4),
+                              ),
+                              trailing: const Icon(Icons.chevron_right),
+                              onTap: () {
+                                ref.read(tripProvider.notifier).setTrip(trip);
+                                context.go('/trip/traveler/plan');
+                              },
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  },
                 ),
-                textAlign: TextAlign.center,
-              ),
+                const SizedBox(height: AppSpacing.lg),
+                Center(
+                  child: Text(
+                    'Evidence-informed guidance. Use with clinical judgment and local protocols.',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontStyle: FontStyle.italic),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

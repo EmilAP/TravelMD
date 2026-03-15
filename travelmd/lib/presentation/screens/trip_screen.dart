@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:travelmd/domain/models/trip.dart';
 import 'package:travelmd/presentation/providers/app_providers.dart';
+import 'package:travelmd/presentation/theme/app_theme.dart';
+import 'package:travelmd/presentation/widgets/app_ui.dart';
 
 /// Trip screen: collect destination(s) and travel dates.
 class TripScreen extends ConsumerStatefulWidget {
@@ -75,10 +77,10 @@ class _TripScreenState extends ConsumerState<TripScreen> {
     try {
       final storage = await ref.read(storageRepositoryProvider.future);
       final tripId = await storage.saveTrip(trip);
-      
+
       // Store Isar ID for plan selection persistence
       ref.read(tripIsarIdProvider.notifier).setId(tripId);
-      
+
       // Invalidate saved trips cache
       ref.invalidate(savedTripsProvider);
     } catch (e) {
@@ -95,86 +97,136 @@ class _TripScreenState extends ConsumerState<TripScreen> {
 
   @override
   Widget build(BuildContext context) {
+    String dateText(DateTime? date, String fallback) {
+      if (date == null) return fallback;
+      return '${date.month}/${date.day}/${date.year}';
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Plan Your Trip'),
+        title: const Text('Trip Context'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Where are you traveling?',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            const SectionHeader(
+              title: 'Step 1 of 2: Trip Setup',
+              subtitle: 'Define destination context used for risk and preparedness guidance.',
             ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _destController,
-              decoration: InputDecoration(
-                labelText: 'Destination iso3 (e.g., IND, ZAF)',
-                hintText: 'Enter 3-letter ISO country code',
-                border: OutlineInputBorder(),
-              ),
-              textCapitalization: TextCapitalization.characters,
+            const SizedBox(height: AppSpacing.md),
+            const InfoChip(
+              icon: Icons.info_outline,
+              label: 'Use ISO3 country codes, for example IND, ZAF, USA.',
+              color: AppColors.brand,
             ),
-            const SizedBox(height: 24),
-            const Text(
-              'Transit countries (optional)',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              controller: _transitController,
-              decoration: InputDecoration(
-                labelText: 'Transit countries (comma-separated)',
-                hintText: 'e.g., AUT, CHE',
-                border: OutlineInputBorder(),
-              ),
-              textCapitalization: TextCapitalization.characters,
-            ),
-            const SizedBox(height: 24),
-            const Text(
-              'When are you traveling? (optional)',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => _selectDate(context, true),
-                    icon: const Icon(Icons.calendar_today),
-                    label: Text(
-                      _departDate == null
-                          ? 'Depart Date'
-                          : '${_departDate!.month}/${_departDate!.day}/${_departDate!.year}',
-                    ),
+            const SizedBox(height: AppSpacing.md),
+            SurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Primary Destination',
+                    style: TextStyle(fontWeight: FontWeight.w700),
                   ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: OutlinedButton.icon(
-                    onPressed: () => _selectDate(context, false),
-                    icon: const Icon(Icons.calendar_today),
-                    label: Text(
-                      _returnDate == null
-                          ? 'Return Date'
-                          : '${_returnDate!.month}/${_returnDate!.day}/${_returnDate!.year}',
-                    ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'This is used as the main destination for rabies endemicity and preparation logic.',
+                    style: Theme.of(context).textTheme.bodySmall,
                   ),
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _destController,
+                    decoration: const InputDecoration(
+                      labelText: 'Destination ISO3',
+                      hintText: 'e.g., IND',
+                    ),
+                    textCapitalization: TextCapitalization.characters,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: AppSpacing.md),
+            SurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Transit Countries (Optional)',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Comma-separated ISO3 values if relevant to your route.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  TextField(
+                    controller: _transitController,
+                    decoration: const InputDecoration(
+                      labelText: 'Transit countries',
+                      hintText: 'e.g., AUT, CHE',
+                    ),
+                    textCapitalization: TextCapitalization.characters,
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.md),
+            SurfaceCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Travel Dates (Optional)',
+                    style: TextStyle(fontWeight: FontWeight.w700),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Dates help sequence preparation actions and timeline context.',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _selectDate(context, true),
+                          icon: const Icon(Icons.calendar_today),
+                          label: Text(dateText(_departDate, 'Depart Date')),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () => _selectDate(context, false),
+                          icon: const Icon(Icons.event_available),
+                          label: Text(dateText(_returnDate, 'Return Date')),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: AppSpacing.xl),
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
+              child: ElevatedButton.icon(
                 onPressed: _saveTrip,
-                child: const Padding(
-                  padding: EdgeInsets.all(16.0),
-                  child: Text('Continue to Traveler Info'),
+                icon: const Icon(Icons.arrow_forward),
+                label: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 2),
+                  child: Text('Continue to Traveler Profile'),
                 ),
+              ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Center(
+              child: Text(
+                'Trip context is saved securely on-device.',
+                style: Theme.of(context).textTheme.bodySmall,
               ),
             ),
           ],
