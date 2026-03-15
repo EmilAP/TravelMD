@@ -6,9 +6,7 @@ import 'package:travelmd/presentation/screens/content_load_error_screen.dart';
 import 'package:travelmd/presentation/theme/app_theme.dart';
 import 'package:travelmd/presentation/widgets/app_ui.dart';
 
-/// Home screen: entry point with two primary CTAs.
-/// 1. Plan a trip (prevention-first flow)
-/// 2. Animal bite / rabies exposure (exposure-response flow)
+/// Home screen: entry point with prevention-first module browsing and incident help.
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
@@ -109,18 +107,18 @@ class HomeScreen extends ConsumerWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton.icon(
-                          onPressed: () => context.go('/trip'),
-                          icon: const Icon(Icons.flight_takeoff),
-                          label: const Text('Plan a Trip'),
+                          onPressed: () => context.go('/modules?focus=prevention'),
+                          icon: const Icon(Icons.shield_outlined),
+                          label: const Text('Browse Prevention Topics'),
                         ),
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       SizedBox(
                         width: double.infinity,
                         child: OutlinedButton.icon(
-                          onPressed: () => context.go('/trip/traveler/plan/exposure'),
+                          onPressed: () => context.go('/modules?focus=incidentResponse'),
                           icon: const Icon(Icons.warning_amber_rounded),
-                          label: const Text('Animal Exposure'),
+                          label: const Text('Get Help After an Exposure or Incident'),
                         ),
                       ),
                     ],

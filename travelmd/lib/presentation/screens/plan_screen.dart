@@ -10,6 +10,7 @@ import 'package:travelmd/domain/models/guidance_card.dart';
 import 'package:travelmd/domain/models/public_plan.dart';
 import 'package:travelmd/domain/models/traveler_profile.dart';
 import 'package:travelmd/domain/models/trip.dart';
+import 'package:travelmd/domain/modules/module_registry.dart';
 import 'package:travelmd/presentation/providers/app_providers.dart';
 import 'package:travelmd/presentation/theme/app_theme.dart';
 import 'package:travelmd/presentation/widgets/app_ui.dart';
@@ -21,6 +22,8 @@ class PlanScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final planAsync = ref.watch(preventionPlanProvider);
+    final selectedModuleId = ref.watch(selectedPreventionModuleIdProvider);
+    final selectedModule = ModuleRegistry.defaultRegistry.byId(selectedModuleId);
     final trip = ref.watch(tripProvider);
     final traveler = ref.watch(travelerProvider);
     final tripId = ref.watch(tripIsarIdProvider);
@@ -35,7 +38,9 @@ class PlanScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Travel Health Dashboard'),
+        title: Text(selectedModule == null
+            ? 'Travel Health Dashboard'
+            : '${selectedModule.title} Prevention Plan'),
       ),
       body: planAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
@@ -558,10 +563,10 @@ class _ChecklistItemWidget extends ConsumerWidget {
               final storage = await ref.read(storageRepositoryProvider.future);
               final planSelection =
                   await storage.loadPlanSelection(tripId: tripId, travelerId: travelerId);
-              if (planSelection != null && planSelection.id != null) {
+              if (planSelection != null) {
                 final newIsDone = !isDone;
                 await storage.saveChecklistItemState(
-                  planSelectionId: planSelection.id!,
+                  planSelectionId: planSelection.id,
                   itemId: itemId,
                   isDone: newIsDone,
                 );

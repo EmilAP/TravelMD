@@ -4,7 +4,6 @@ import 'package:travelmd/domain/enums/when_to_do.dart';
 import 'package:travelmd/domain/enums/checklist_category.dart';
 import 'package:travelmd/domain/enums/animal_type.dart';
 import 'package:travelmd/domain/enums/exposure_contact_type.dart';
-import 'package:travelmd/domain/enums/body_location.dart';
 import 'package:travelmd/domain/enums/yes_no_unknown.dart';
 import 'package:travelmd/domain/models/guidance_card.dart';
 import 'package:travelmd/domain/models/checklist_item.dart';

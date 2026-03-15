@@ -316,7 +316,7 @@ class _RabiesExposureWizardScreenState
                   onChanged: (val) =>
                       setState(() => _animalAvailable = val ?? YesNoUnknown.unknown),
                 );
-              }).toList(),
+              }),
               const SizedBox(height: 10),
               TextField(
                 decoration: const InputDecoration(
@@ -328,7 +328,7 @@ class _RabiesExposureWizardScreenState
               ),
               const SizedBox(height: 12),
               DropdownButtonFormField<BodyLocation>(
-                value: _bodyLocation,
+                initialValue: _bodyLocation,
                 decoration: const InputDecoration(labelText: 'Body location'),
                 items: BodyLocation.values.map((loc) {
                   return DropdownMenuItem<BodyLocation>(

@@ -151,7 +151,7 @@ class _TravelerScreenState extends ConsumerState<TravelerScreen> {
                   ),
                   const SizedBox(height: 12),
                   DropdownButtonFormField<String>(
-                    value: _purpose,
+                    initialValue: _purpose,
                     decoration: const InputDecoration(labelText: 'Primary purpose'),
                     items: const [
                       DropdownMenuItem(value: 'tourism', child: Text('Tourism')),

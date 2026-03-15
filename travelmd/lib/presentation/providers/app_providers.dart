@@ -5,7 +5,11 @@ import 'package:travelmd/data/storage/storage_repository.dart';
 import 'package:travelmd/domain/models/trip.dart';
 import 'package:travelmd/domain/models/traveler_profile.dart';
 import 'package:travelmd/domain/models/public_plan.dart';
-import 'package:travelmd/domain/rules/rabies_plan_builder.dart';
+import 'package:travelmd/domain/models/guidance_card.dart';
+import 'package:travelmd/domain/models/checklist_item.dart';
+import 'package:travelmd/domain/models/timeline_item.dart';
+import 'package:travelmd/domain/modules/module_registry.dart';
+import 'package:travelmd/presentation/providers/module_catalog_providers.dart';
 
 /// Storage repository provider (async, initializes Isar).
 final storageRepositoryProvider = FutureProvider<StorageRepository>((ref) async {
@@ -83,6 +87,11 @@ final planProvider = StateNotifierProvider<_PlanNotifier, PublicPlan>((ref) {
   return _PlanNotifier();
 });
 
+/// Selected prevention module used to generate the plan view.
+final selectedPreventionModuleIdProvider = StateProvider<String>((ref) {
+  return 'rabies';
+});
+
 class _PlanNotifier extends StateNotifier<PublicPlan> {
   _PlanNotifier()
       : super(PublicPlan(
@@ -147,6 +156,8 @@ final preventionPlanProvider = FutureProvider<PublicPlan>((ref) async {
   final trip = ref.watch(tripProvider);
   final traveler = ref.watch(travelerProvider);
   final contentRepo = ref.watch(contentRepositoryProvider);
+  final selectedModuleId = ref.watch(selectedPreventionModuleIdProvider);
+  final moduleExecutionService = ref.watch(moduleExecutionServiceProvider);
 
   if (trip == null || traveler == null) {
     return PublicPlan(
@@ -161,24 +172,33 @@ final preventionPlanProvider = FutureProvider<PublicPlan>((ref) async {
   // Load content first
   await contentRepo.loadAll();
 
-  // Build plan patch
-  const builder = RabiesPlanBuilder();
-  final patch = await builder.build(
+  final module = ModuleRegistry.defaultRegistry.byId(selectedModuleId) ??
+      ModuleRegistry.defaultRegistry.byId('rabies')!;
+
+  final cards = <GuidanceCard>[];
+  final checklist = <ChecklistItem>[];
+  final timeline = <TimelineItem>[];
+
+  final result = await moduleExecutionService.evaluatePrevention(
+    moduleId: module.id,
     trip: trip,
     traveler: traveler,
-    contentRepo: contentRepo,
+    contentRepository: contentRepo,
   );
+  cards.addAll(result.cardsToAdd);
+  checklist.addAll(result.checklistToAdd);
+  timeline.addAll(result.timelineToAdd);
 
   // Create new plan from patch
   return PublicPlan(
-    id: 'plan_${trip.destinationCountry}_${traveler.ageYears}',
+    id: '${module.id}_plan_${trip.destinationCountry}_${traveler.ageYears}',
     tripId: 'trip_${trip.destinationCountry}',
     travelerId: 'traveler_${traveler.ageYears}',
-    title: 'Your Travel Health Plan',
-    summary: 'Prevention-first guidance for your trip to ${trip.destinationCountry}',
-    cards: patch.cardsToAdd,
-    checklist: patch.checklistToAdd,
-    timeline: patch.timelineToAdd,
+    title: '${module.title} Prevention Plan',
+    summary: '${module.title} prevention guidance for your trip to ${trip.destinationCountry}',
+    cards: List.unmodifiable(cards),
+    checklist: List.unmodifiable(checklist),
+    timeline: List.unmodifiable(timeline),
   );
 });
 
@@ -195,11 +215,11 @@ final persistedChecklistStateProvider = FutureProvider<Map<String, bool>>((ref) 
     final storage = await ref.watch(storageRepositoryProvider.future);
     // Get the plan selection to find the planSelectionId
     final planSelection = await storage.loadPlanSelection(tripId: tripId, travelerId: travelerId);
-    if (planSelection == null || planSelection.id == null) {
+    if (planSelection == null) {
       return {};
     }
     // Load checklist states for this plan
-    return storage.loadChecklistStates(planSelection.id!);
+    return storage.loadChecklistStates(planSelection.id);
   } catch (e) {
     // If no persisted state, return empty map
     return {};

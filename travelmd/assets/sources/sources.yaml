@@ -29,3 +29,13 @@ sources:
     organization: "Pan American Health Organization (PAHO)"
     url: "https://www.paho.org"
     lastReviewed: "2025-11-05"
+  who_malaria:
+    title: "Malaria"
+    organization: "World Health Organization (WHO)"
+    url: "https://www.who.int/news-room/fact-sheets/detail/malaria"
+    lastReviewed: "2026-03-15"
+  cdc_malaria:
+    title: "Malaria prevention for travelers"
+    organization: "Centers for Disease Control and Prevention (CDC)"
+    url: "https://www.cdc.gov/malaria/travelers/index.html"
+    lastReviewed: "2026-03-15"

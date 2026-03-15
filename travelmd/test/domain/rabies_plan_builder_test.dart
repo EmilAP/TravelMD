@@ -5,7 +5,6 @@ import 'package:travelmd/domain/models/exposure_intake.dart';
 import 'package:travelmd/domain/models/guidance_card.dart';
 import 'package:travelmd/domain/enums/animal_type.dart';
 import 'package:travelmd/domain/enums/exposure_contact_type.dart';
-import 'package:travelmd/domain/enums/checklist_category.dart';
 import 'package:travelmd/domain/rules/rabies_plan_builder.dart';
 import 'package:travelmd/data/parsers/yaml_asset_loader.dart';
 import 'package:travelmd/data/parsers/sources_parser.dart';
@@ -19,7 +18,7 @@ void main() {
     late ContentRepository contentRepo;
 
     // Helper to create a mock ContentRepository with test YAML
-    ContentRepository _createMockRepo() {
+    ContentRepository createMockRepo() {
       // Inline YAML for testing
       const sourcesYaml = '''
 sources:
@@ -156,16 +155,16 @@ cards:
       final cardsParser = RabiesCardsParser();
 
       // Pre-parse to avoid async issues in setup
-      final _sources = sourcesParser.parse(sourcesYaml);
-      final _endemic = geoParser.parse(geoYaml);
-      final _cards = cardsParser.parse(cardsYaml);
+      final sources = sourcesParser.parse(sourcesYaml);
+      final endemic = geoParser.parse(geoYaml);
+      final cards = cardsParser.parse(cardsYaml);
 
       // Return a mock repository
-      return _MockContentRepository(_sources, _endemic, _cards);
+      return _MockContentRepository(sources, endemic, cards);
     }
 
     setUp(() {
-      contentRepo = _createMockRepo();
+      contentRepo = createMockRepo();
     });
 
     test('endemic destination + adult => prevention + preparedness cards (no kids)', () async {

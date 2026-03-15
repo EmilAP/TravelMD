@@ -1,0 +1,4 @@
+enum ModuleStream {
+  prevention,
+  incidentResponse,
+}

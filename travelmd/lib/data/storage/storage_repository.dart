@@ -5,7 +5,6 @@ import 'package:travelmd/data/storage/entities/trip_entity.dart';
 import 'package:travelmd/data/storage/entities/traveler_entity.dart';
 import 'package:travelmd/data/storage/entities/plan_selection_entity.dart';
 import 'package:travelmd/data/storage/entities/checklist_state_entity.dart';
-import 'package:travelmd/data/storage/isar_service.dart';
 
 /// Repository for persisting and retrieving trip, traveler, and plan data.
 class StorageRepository {

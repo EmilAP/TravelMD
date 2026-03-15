@@ -1,0 +1,78 @@
+cards:
+  - id: "malaria_prevent_general_mosquito_avoidance"
+    title: "Avoid mosquito bites"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Use basic bite prevention even in places with low malaria risk."
+    whyThisMatters: "Mosquito bites can spread several illnesses, not only malaria."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use bite prevention during daytime and evening hours."
+      - label: "Reduce standing water near where you stay when possible."
+    sourceRefs: ["who_malaria", "cdc_malaria"]
+    lastReviewed: "2026-03-15"
+
+  - id: "malaria_prevent_use_repellent"
+    title: "Use insect repellent correctly"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Apply repellent to exposed skin and reapply as directed on the label."
+    whyThisMatters: "Correct repellent use lowers your chance of mosquito bites."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Follow product instructions for timing and reapplication."
+      - label: "Apply sunscreen first, then repellent if both are used."
+    sourceRefs: ["cdc_malaria"]
+    lastReviewed: "2026-03-15"
+
+  - id: "malaria_prevent_bed_nets_room_protection"
+    title: "Protect your sleeping space"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Sleep under bed nets and keep rooms screened or air-conditioned when available."
+    whyThisMatters: "Many mosquito species bite most during evening and nighttime hours."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use an intact bed net if your room is not well sealed."
+      - label: "Keep doors and windows closed when possible."
+    sourceRefs: ["who_malaria"]
+    lastReviewed: "2026-03-15"
+
+  - id: "malaria_prevent_cover_skin"
+    title: "Dress to reduce bites"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Wear long sleeves, long pants, and socks when mosquitoes are active."
+    whyThisMatters: "Physical barriers can reduce exposed skin and bite opportunities."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Choose light, breathable long clothing when practical."
+      - label: "Prioritize coverage at dawn and dusk."
+    sourceRefs: ["who_malaria", "cdc_malaria"]
+    lastReviewed: "2026-03-15"
+
+  - id: "malaria_prevent_discuss_medication"
+    title: "Discuss malaria prevention medication before travel"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Ask a travel health professional if preventive malaria medication is recommended for your trip."
+    whyThisMatters: "Medication planning depends on destination, trip style, and personal health factors."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Book a travel health visit before departure."
+      - label: "Bring your itinerary and medical history to that visit."
+    sourceRefs: ["cdc_malaria"]
+    lastReviewed: "2026-03-15"
+
+  - id: "malaria_prevent_plan_early_care"
+    title: "Have a plan if fever starts during travel"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Know where to get urgent care if you develop fever while abroad."
+    whyThisMatters: "Rapid evaluation of fever can be important in malaria-risk regions."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save local clinic or hospital contact details."
+      - label: "Seek prompt care for fever during or after travel to risk areas."
+    sourceRefs: ["who_malaria", "cdc_malaria"]
+    lastReviewed: "2026-03-15"

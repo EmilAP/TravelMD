@@ -1,0 +1,15 @@
+countries:
+  IND:
+    endemic: true
+  ZAF:
+    endemic: true
+  THA:
+    endemic: true
+  BRA:
+    endemic: true
+  USA:
+    endemic: false
+  AUS:
+    endemic: false
+  ISL:
+    endemic: false

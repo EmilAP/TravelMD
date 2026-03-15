@@ -19,7 +19,9 @@ class ContentRepository {
   // Caches
   Future<Map<String, dynamic>>? _sourcesCache;
   Future<Map<String, bool>>? _rabiesEndemicCache;
+  Future<Map<String, bool>>? _malariaRelevantCache;
   Future<List<GuidanceCard>>? _rabiesCardsCache;
+  Future<List<GuidanceCard>>? _malariaCardsCache;
 
   ContentRepository({
     YamlAssetLoader? assetLoader,
@@ -33,7 +35,9 @@ class ContentRepository {
     await Future.wait([
       _loadSources(),
       _loadRabiesEndemic(),
+      _loadMalariaRelevant(),
       _loadRabiesCards(),
+      _loadMalariaCards(),
     ]);
   }
 
@@ -77,6 +81,31 @@ class ContentRepository {
     return await _rabiesCardsCache!;
   }
 
+  Future<Map<String, bool>> _loadMalariaRelevant() async {
+    _malariaRelevantCache ??= (() async {
+      final yaml = await _assetLoader.loadAssetYaml('assets/geo/malaria_relevant.yaml');
+      return _geoParser.parse(yaml);
+    })();
+    return await _malariaRelevantCache!;
+  }
+
+  Future<List<GuidanceCard>> _loadMalariaCards() async {
+    _malariaCardsCache ??= (() async {
+      final yaml = await _assetLoader.loadAssetYaml('assets/content/malaria_public.yaml');
+      final cards = _cardsParser.parse(yaml);
+      final sources = await _loadSources();
+      for (final card in cards) {
+        for (final ref in card.sourceRefs) {
+          if (!sources.containsKey(ref)) {
+            throw FormatException('Card "${card.id}" references unknown source "$ref"');
+          }
+        }
+      }
+      return cards;
+    })();
+    return await _malariaCardsCache!;
+  }
+
   /// Get a source by ID.
   Future<Map<String, dynamic>?> getSource(String sourceId) async {
     final sources = await _loadSources();
@@ -106,5 +135,20 @@ class ContentRepository {
     // This is a simplification. In production, GuidanceCard would have a pillar field.
     // For now, cards are grouped in YAML in pillar order but we can't filter programmatically.
     return cards;
+  }
+
+  /// Check if malaria prevention guidance is relevant for a country (ISO3).
+  Future<bool> isMalariaRelevant(String iso3) async {
+    final relevantMap = await _loadMalariaRelevant();
+    final result = relevantMap[iso3];
+    if (result == null) {
+      throw FormatException('Country ISO3 "$iso3" not found in malaria relevance mapping');
+    }
+    return result;
+  }
+
+  /// Get all malaria guidance cards.
+  Future<List<GuidanceCard>> getMalariaCards() async {
+    return await _loadMalariaCards();
   }
 }
