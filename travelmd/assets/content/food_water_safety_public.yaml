@@ -1,0 +1,102 @@
+cards:
+  - id: "foodwater_choose_hot_food"
+    title: "Choose food that is cooked and served hot"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "high"
+    timing: "during_travel"
+    tags: ["food", "prevention", "hygiene"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Prefer freshly cooked meals over foods left at room temperature."
+    whyThisMatters: "Heat can reduce many foodborne risks when food is prepared and handled safely."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Pick vendors or venues where food is actively cooked."
+      - label: "Be cautious with items that have been sitting out."
+    sourceRefs: ["who_food_safety", "cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "foodwater_select_safer_water"
+    title: "Use safer drinking water options"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "high"
+    timing: "both"
+    tags: ["water", "hydration", "prevention"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Plan and choose lower-risk water sources throughout your trip."
+    whyThisMatters: "Water quality and reliability can vary widely across destinations."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use trusted bottled, boiled, or otherwise treated water where needed."
+      - label: "Use safer water for brushing teeth in higher-risk settings."
+    sourceRefs: ["who_drinking_water", "cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "foodwater_hand_hygiene"
+    title: "Use hand hygiene before eating"
+    pillar: "prevention"
+    urgency: "routine"
+    priority: "medium"
+    timing: "during_travel"
+    tags: ["hygiene", "food", "prevention"]
+    relatedModules: []
+    summary: "Clean hands before meals and after restroom use whenever possible."
+    whyThisMatters: "Hand hygiene helps reduce common pathways for gastrointestinal illness."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Wash with soap and water when available."
+      - label: "Use hand sanitizer when handwashing is not practical."
+    sourceRefs: ["who_food_safety"]
+    lastReviewed: "2026-03-17"
+
+  - id: "foodwater_hydrate_safely"
+    title: "Stay hydrated safely"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "medium"
+    timing: "during_travel"
+    tags: ["hydration", "heat", "prevention"]
+    relatedModules: ["travel_injury_prevention"]
+    summary: "Drink fluids regularly with attention to local heat and activity levels."
+    whyThisMatters: "Dehydration can worsen fatigue and increase medical risk during travel."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Carry safe fluids during transport and day trips."
+      - label: "Increase fluid intake in hot or high-activity conditions."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "foodwater_pack_ors"
+    title: "Pack oral rehydration supplies"
+    pillar: "preparedness"
+    urgency: "routine"
+    priority: "low"
+    timing: "before_travel"
+    tags: ["hydration", "kit", "pretravel"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Include oral rehydration packets in your travel health supplies."
+    whyThisMatters: "Early hydration support can be useful when gastrointestinal symptoms begin."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Pack oral rehydration packets before departure."
+      - label: "Review basic instructions for use before travel."
+    sourceRefs: ["who_drinking_water"]
+    lastReviewed: "2026-03-17"
+
+  - id: "foodwater_know_when_to_seek_care"
+    title: "Know warning signs that need medical care"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "high"
+    timing: "both"
+    tags: ["warning-signs", "care-access", "safety"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Seek medical help for severe dehydration, persistent fever, or worsening symptoms."
+    whyThisMatters: "Prompt care can reduce complications when illness does not improve."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Know the local care location you would use if symptoms worsen."
+      - label: "Seek urgent care for severe symptoms or signs of dehydration."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"

@@ -44,6 +44,26 @@ Discovery vs execution:
   - an optional prevention engine
   - an optional incident engine
 
+## Public Categories vs Internal Modules
+
+- Public-facing catalog navigation uses broad categories designed for lay travelers.
+- Internal modules remain more specific and continue to power strategies, engines, and algorithms.
+- Categories are intentionally broader than modules:
+  - one category can contain multiple modules over time
+  - one module can appear in more than one category when it supports different public use cases
+
+Examples:
+
+- `avoid_animal_bites` includes `rabies`
+- `if_something_happens` includes `rabies`
+- `avoid_bug_bites` includes `malaria`
+
+Future modules should:
+
+1. be added to the internal module registry
+2. be assigned to one or more public-facing categories
+3. keep public navigation category-driven while execution remains module-driven
+
 ## Rabies Reference Implementation
 
 - Prevention logic lives in `RabiesPreventionEngine`.

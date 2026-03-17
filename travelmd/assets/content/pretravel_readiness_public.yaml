@@ -1,0 +1,119 @@
+cards:
+  - id: "pretravel_visit_early"
+    title: "Book a pre-travel health visit early"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "high"
+    timing: "before_travel"
+    tags: ["pretravel", "planning", "clinic"]
+    relatedModules: ["rabies", "malaria"]
+    summary: "Schedule a travel-health appointment before departure whenever possible."
+    whyThisMatters: "Early planning leaves time for vaccines, medicine access, and itinerary-specific advice."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Book a visit as soon as travel dates are known."
+      - label: "Bring your itinerary and medical history to the visit."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_review_vaccines"
+    title: "Review vaccines for your destination"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "high"
+    timing: "before_travel"
+    tags: ["pretravel", "vaccines", "destination"]
+    relatedModules: ["rabies"]
+    summary: "Check routine and destination-specific vaccine guidance before travel."
+    whyThisMatters: "Vaccination needs vary by region, season, and traveler health factors."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Review recommendations with a qualified travel-health professional."
+      - label: "Start vaccine series early when multi-dose schedules are needed."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_pack_medicines"
+    title: "Pack medicines and prescription copies"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "medium"
+    timing: "before_travel"
+    tags: ["medications", "documents", "pretravel"]
+    relatedModules: []
+    summary: "Bring enough routine medicines and keep documentation with your supplies."
+    whyThisMatters: "Medication access can be difficult or delayed while abroad."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Carry medicines in original packaging when possible."
+      - label: "Bring a copy of prescriptions and key medication details."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_check_insurance"
+    title: "Check insurance and emergency coverage"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "medium"
+    timing: "before_travel"
+    tags: ["insurance", "emergency", "planning"]
+    relatedModules: ["travel_injury_prevention"]
+    summary: "Understand your policy for urgent care, evacuation, and out-of-country costs."
+    whyThisMatters: "Coverage gaps can delay care decisions during urgent situations."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Confirm what urgent and emergency services are covered abroad."
+      - label: "Save policy numbers and support contacts where you can access them quickly."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_plan_care_access"
+    title: "Plan where to get care at your destination"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "medium"
+    timing: "before_travel"
+    tags: ["care-access", "emergency", "planning"]
+    relatedModules: ["food_water_safety", "travel_injury_prevention"]
+    summary: "Identify at least one reliable clinic or hospital before your trip begins."
+    whyThisMatters: "Knowing where to go reduces delays when symptoms or injuries occur."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save a nearby clinic and hospital in your phone."
+      - label: "Confirm location details and expected payment method if available."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_build_health_kit"
+    title: "Build a practical travel health kit"
+    pillar: "preparedness"
+    urgency: "routine"
+    priority: "low"
+    timing: "before_travel"
+    tags: ["kit", "pretravel", "safety"]
+    relatedModules: ["food_water_safety", "travel_injury_prevention"]
+    summary: "Pack simple supplies you are likely to need during normal travel disruptions."
+    whyThisMatters: "Prepared supplies can reduce avoidable stress and delays when minor issues happen."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Pack oral rehydration packets, pain reliever, and basic first-aid items."
+      - label: "Include hand sanitizer and sun protection supplies."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "pretravel_save_emergency_contacts"
+    title: "Save emergency contacts and key documents"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "medium"
+    timing: "before_travel"
+    tags: ["emergency", "documents", "contacts"]
+    relatedModules: ["travel_injury_prevention"]
+    summary: "Store critical numbers and document copies where you can quickly access them."
+    whyThisMatters: "Fast access to contacts and records improves coordination in urgent situations."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save local emergency numbers and trusted contact details."
+      - label: "Keep digital and offline copies of essential travel documents."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"

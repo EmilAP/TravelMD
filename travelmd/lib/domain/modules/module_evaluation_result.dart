@@ -1,5 +1,6 @@
 import 'package:travelmd/domain/models/checklist_item.dart';
 import 'package:travelmd/domain/models/guidance_card.dart';
+import 'package:travelmd/domain/models/module_checklist.dart';
 import 'package:travelmd/domain/models/timeline_item.dart';
 import 'package:travelmd/domain/modules/module_stream.dart';
 
@@ -9,6 +10,7 @@ class ModuleEvaluationResult {
   final String? algorithmId;
   final String? algorithmVersion;
   final List<GuidanceCard> cardsToAdd;
+  final List<ModuleChecklist> checklists;
   final List<ChecklistItem> checklistToAdd;
   final List<TimelineItem> timelineToAdd;
   final List<String> alerts;
@@ -21,6 +23,7 @@ class ModuleEvaluationResult {
     this.algorithmId,
     this.algorithmVersion,
     this.cardsToAdd = const [],
+    this.checklists = const [],
     this.checklistToAdd = const [],
     this.timelineToAdd = const [],
     this.alerts = const [],

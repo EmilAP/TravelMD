@@ -63,6 +63,51 @@ void main() {
       expect(cardIds, contains('malaria_prevent_discuss_medication'));
     });
 
+    test('resolves pretravel_readiness prevention with default checklist metadata', () async {
+      final result = await service.evaluatePrevention(
+        moduleId: 'pretravel_readiness',
+        trip: trip,
+        traveler: traveler,
+        contentRepository: createTestContentRepository(),
+      );
+
+      final cardIds = result.cardsToAdd.map((card) => card.id).toList();
+      expect(cardIds, contains('pretravel_visit_early'));
+      expect(cardIds, contains('pretravel_plan_care_access'));
+      expect(result.rationaleSummary, isNotNull);
+      expect(result.checklists, isNotEmpty);
+      expect(result.checklists.first.checklistId, 'pretravel_readiness_basics');
+      expect(result.checklistToAdd.any((item) => item.isCritical), isTrue);
+    });
+
+    test('resolves food_water_safety prevention through registry binding', () async {
+      final result = await service.evaluatePrevention(
+        moduleId: 'food_water_safety',
+        trip: trip,
+        traveler: traveler,
+        contentRepository: createTestContentRepository(),
+      );
+
+      final cardIds = result.cardsToAdd.map((card) => card.id).toList();
+      expect(cardIds, contains('foodwater_choose_hot_food'));
+      expect(cardIds, contains('foodwater_know_when_to_seek_care'));
+      expect(result.checklists.first.checklistId, 'food_water_safety_basics');
+    });
+
+    test('resolves travel_injury_prevention prevention through registry binding', () async {
+      final result = await service.evaluatePrevention(
+        moduleId: 'travel_injury_prevention',
+        trip: trip,
+        traveler: traveler,
+        contentRepository: createTestContentRepository(),
+      );
+
+      final cardIds = result.cardsToAdd.map((card) => card.id).toList();
+      expect(cardIds, contains('injury_safer_transport_choices'));
+      expect(cardIds, contains('injury_plan_help_access'));
+      expect(result.checklists.first.checklistId, 'travel_injury_prevention_basics');
+    });
+
     test('malaria incident fails predictably as unsupported stream', () async {
       expect(
         () => service.evaluateIncident(

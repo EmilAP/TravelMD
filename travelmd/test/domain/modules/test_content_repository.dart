@@ -28,6 +28,26 @@ sources:
     organization: "CDC"
     url: "https://cdc.gov/malaria"
     lastReviewed: "2026-03-15"
+  cdc_travel_health_general:
+    title: "Travelers' Health"
+    organization: "CDC"
+    url: "https://wwwnc.cdc.gov/travel"
+    lastReviewed: "2026-03-17"
+  who_food_safety:
+    title: "Food safety"
+    organization: "WHO"
+    url: "https://www.who.int/health-topics/food-safety"
+    lastReviewed: "2026-03-17"
+  who_drinking_water:
+    title: "Drinking-water"
+    organization: "WHO"
+    url: "https://www.who.int/news-room/fact-sheets/detail/drinking-water"
+    lastReviewed: "2026-03-17"
+  who_injury_prevention:
+    title: "Injuries and violence"
+    organization: "WHO"
+    url: "https://www.who.int/teams/social-determinants-of-health/safety-and-mobility"
+    lastReviewed: "2026-03-17"
 ''';
 
   const geoYaml = '''
@@ -228,11 +248,250 @@ cards:
     lastReviewed: "2026-03-15"
 ''';
 
+  const pretravelCardsYaml = '''
+cards:
+  - id: "pretravel_visit_early"
+    title: "Book a pre-travel health visit early"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Schedule pre-travel planning early."
+    whyThisMatters: "Early planning improves readiness."
+    whenToDoIt: "beforeTravel"
+    tags: ["pretravel"]
+    priority: "high"
+    timing: "before_travel"
+    relatedModules: ["rabies", "malaria"]
+    steps:
+      - label: "Book a visit before departure."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_review_vaccines"
+    title: "Review vaccines"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Check destination vaccine guidance."
+    whyThisMatters: "Vaccine needs vary by trip."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Review recommendations with a clinician."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_pack_medicines"
+    title: "Pack medicines"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Bring routine meds and copies."
+    whyThisMatters: "Refills can be difficult abroad."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Bring enough routine medicines."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_check_insurance"
+    title: "Check insurance"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Confirm emergency coverage details."
+    whyThisMatters: "Coverage affects care access."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save policy numbers and support contacts."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_plan_care_access"
+    title: "Plan care access"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Identify one clinic and one hospital."
+    whyThisMatters: "Faster action helps in urgent moments."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save local care locations."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_build_health_kit"
+    title: "Build a health kit"
+    pillar: "preparedness"
+    urgency: "routine"
+    summary: "Pack practical health supplies."
+    whyThisMatters: "Small issues are easier to manage prepared."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Include first aid and hydration supplies."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "pretravel_save_emergency_contacts"
+    title: "Save emergency contacts"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Store emergency numbers and key records."
+    whyThisMatters: "Quick access supports faster response."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save local emergency numbers."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+''';
+
+  const foodWaterCardsYaml = '''
+cards:
+  - id: "foodwater_choose_hot_food"
+    title: "Choose hot food"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Prefer food cooked and served hot."
+    whyThisMatters: "Helps lower foodborne risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Prefer freshly cooked meals."
+    sourceRefs: ["who_food_safety"]
+    lastReviewed: "2026-03-17"
+  - id: "foodwater_select_safer_water"
+    title: "Use safer water"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Plan safer water options."
+    whyThisMatters: "Water quality varies by destination."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use treated or trusted water sources."
+    sourceRefs: ["who_drinking_water"]
+    lastReviewed: "2026-03-17"
+  - id: "foodwater_hand_hygiene"
+    title: "Use hand hygiene"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Wash or sanitize before meals."
+    whyThisMatters: "Reduces contamination pathways."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Wash hands or use sanitizer."
+    sourceRefs: ["who_food_safety"]
+    lastReviewed: "2026-03-17"
+  - id: "foodwater_hydrate_safely"
+    title: "Hydrate safely"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Drink enough safe fluids."
+    whyThisMatters: "Hydration supports safer travel in heat."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Carry fluids and drink regularly."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "foodwater_pack_ors"
+    title: "Pack oral rehydration"
+    pillar: "preparedness"
+    urgency: "routine"
+    summary: "Pack oral rehydration packets."
+    whyThisMatters: "Useful if stomach symptoms occur."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Pack oral rehydration packets."
+    sourceRefs: ["who_drinking_water"]
+    lastReviewed: "2026-03-17"
+  - id: "foodwater_know_when_to_seek_care"
+    title: "Know when to seek care"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Review severe symptom warning signs."
+    whyThisMatters: "Prompt care can reduce complications."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Seek care for worsening or severe symptoms."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+''';
+
+  const injuryCardsYaml = '''
+cards:
+  - id: "injury_safer_transport_choices"
+    title: "Choose safer transport"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Favor safer transport options."
+    whyThisMatters: "Road injuries are a common travel risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use trusted transport options."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_helmets_and_seatbelts"
+    title: "Use helmets and seatbelts"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Use protection every time."
+    whyThisMatters: "Lowers severe injury risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Do not ride without proper protection."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_heat_and_sun_protection"
+    title: "Prevent heat and sun injury"
+    pillar: "prevention"
+    urgency: "important"
+    summary: "Hydrate and reduce heat exposure."
+    whyThisMatters: "Heat illness can progress quickly."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Plan around peak heat and use sun protection."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_alcohol_risk_awareness"
+    title: "Use caution with alcohol"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Avoid high-risk activities after drinking."
+    whyThisMatters: "Impaired judgment raises injury risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Set a safer transportation plan before events."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_activity_fit_and_gear"
+    title: "Match activities to your readiness"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Choose activities that match your skills and gear."
+    whyThisMatters: "Preparation helps reduce preventable injuries."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Check conditions and equipment before activities."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_walking_and_night_movement"
+    title: "Move more safely at night"
+    pillar: "prevention"
+    urgency: "routine"
+    summary: "Use better lighting and awareness practices."
+    whyThisMatters: "Injury and safety risks can increase after dark."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use well-lit routes and avoid isolated shortcuts."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+  - id: "injury_plan_help_access"
+    title: "Plan urgent help access"
+    pillar: "preparedness"
+    urgency: "important"
+    summary: "Know where to get urgent care quickly."
+    whyThisMatters: "Care delays can worsen outcomes."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save local urgent care options."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+''';
+
   final sources = const SourcesParser().parse(sourcesYaml);
   final endemic = const RabiesGeoParser().parse(geoYaml);
   final cards = const RabiesCardsParser().parse(cardsYaml);
   final malariaRelevant = const RabiesGeoParser().parse(malariaGeoYaml);
   final malariaCards = const RabiesCardsParser().parse(malariaCardsYaml);
+  final pretravelCards = const RabiesCardsParser().parse(pretravelCardsYaml);
+  final foodWaterCards = const RabiesCardsParser().parse(foodWaterCardsYaml);
+  final injuryCards = const RabiesCardsParser().parse(injuryCardsYaml);
 
   return TestContentRepository(
     sources,
@@ -240,6 +499,9 @@ cards:
     cards,
     malariaRelevant,
     malariaCards,
+    pretravelCards,
+    foodWaterCards,
+    injuryCards,
   );
 }
 
@@ -249,6 +511,9 @@ class TestContentRepository extends ContentRepository {
   final List<GuidanceCard> _rabiesCards;
   final Map<String, bool> _malariaRelevant;
   final List<GuidanceCard> _malariaCards;
+  final List<GuidanceCard> _pretravelCards;
+  final List<GuidanceCard> _foodWaterCards;
+  final List<GuidanceCard> _injuryCards;
 
   TestContentRepository(
     this._sources,
@@ -256,6 +521,9 @@ class TestContentRepository extends ContentRepository {
     this._rabiesCards,
     this._malariaRelevant,
     this._malariaCards,
+    this._pretravelCards,
+    this._foodWaterCards,
+    this._injuryCards,
   )
       : super(assetLoader: const YamlAssetLoader());
 
@@ -298,5 +566,20 @@ class TestContentRepository extends ContentRepository {
   @override
   Future<List<GuidanceCard>> getMalariaCards() async {
     return _malariaCards;
+  }
+
+  @override
+  Future<List<GuidanceCard>> getPretravelReadinessCards() async {
+    return _pretravelCards;
+  }
+
+  @override
+  Future<List<GuidanceCard>> getFoodWaterSafetyCards() async {
+    return _foodWaterCards;
+  }
+
+  @override
+  Future<List<GuidanceCard>> getTravelInjuryPreventionCards() async {
+    return _injuryCards;
   }
 }

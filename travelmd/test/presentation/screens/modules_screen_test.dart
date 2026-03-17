@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:travelmd/presentation/screens/modules_screen.dart';
 
 void main() {
-  testWidgets('prevention section includes rabies and malaria', (tester) async {
+  testWidgets('public catalog shows prevention categories rather than raw modules', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
@@ -14,12 +14,14 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('Prevention Modules'), findsOneWidget);
-    expect(find.byKey(const Key('module-tile-prevention-rabies')), findsOneWidget);
-    expect(find.byKey(const Key('module-tile-prevention-malaria')), findsOneWidget);
+    expect(find.text('Prevention Categories'), findsOneWidget);
+    expect(find.byKey(const Key('category-tile-avoid_animal_bites')), findsOneWidget);
+    expect(find.byKey(const Key('category-tile-avoid_bug_bites')), findsOneWidget);
+    expect(find.text('Rabies'), findsNothing);
+    expect(find.text('Malaria'), findsNothing);
   });
 
-  testWidgets('incident section includes rabies only', (tester) async {
+  testWidgets('incident category is shown as if something happens', (tester) async {
     await tester.pumpWidget(
       const ProviderScope(
         child: MaterialApp(
@@ -32,8 +34,7 @@ void main() {
     await tester.drag(find.byType(ListView), const Offset(0, -600));
     await tester.pumpAndSettle();
 
-    expect(find.text('Incident Help Modules'), findsOneWidget);
-    expect(find.byKey(const Key('module-tile-incidentResponse-rabies')), findsOneWidget);
-    expect(find.byKey(const Key('module-tile-incidentResponse-malaria')), findsNothing);
+    expect(find.text('If Something Happens'), findsOneWidget);
+    expect(find.byKey(const Key('category-tile-if_something_happens')), findsOneWidget);
   });
 }

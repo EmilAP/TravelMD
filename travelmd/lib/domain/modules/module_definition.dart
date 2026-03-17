@@ -7,6 +7,7 @@ class ModuleDefinition {
   final String preventionFocus;
   final String iconKey;
   final bool requiresTripContext;
+  final bool isInformationalGuide;
   final List<ModuleStream> supportedStreams;
   final bool enabled;
 
@@ -17,6 +18,7 @@ class ModuleDefinition {
     required this.preventionFocus,
     required this.iconKey,
     this.requiresTripContext = true,
+    this.isInformationalGuide = false,
     required this.supportedStreams,
     this.enabled = true,
   });

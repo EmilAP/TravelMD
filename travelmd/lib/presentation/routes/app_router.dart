@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:travelmd/presentation/screens/home_screen.dart';
+import 'package:travelmd/presentation/screens/module_category_screen.dart';
 import 'package:travelmd/presentation/screens/module_detail_screen.dart';
 import 'package:travelmd/presentation/screens/modules_screen.dart';
 import 'package:travelmd/presentation/screens/trip_screen.dart';
@@ -28,6 +29,14 @@ final appRouter = GoRouter(
             return ModulesScreen(focusStream: focusStream);
           },
           routes: [
+            GoRoute(
+              path: 'category/:categoryId',
+              builder: (context, state) {
+                return ModuleCategoryScreen(
+                  categoryId: state.pathParameters['categoryId']!,
+                );
+              },
+            ),
             GoRoute(
               path: ':moduleId',
               builder: (context, state) {

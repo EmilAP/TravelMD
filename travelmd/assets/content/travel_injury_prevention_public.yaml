@@ -1,0 +1,119 @@
+cards:
+  - id: "injury_safer_transport_choices"
+    title: "Choose safer transportation options"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "high"
+    timing: "both"
+    tags: ["transport", "road-safety", "prevention"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Favor transportation choices with stronger safety practices when possible."
+    whyThisMatters: "Road incidents are a leading source of serious travel injury."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use reputable transport and avoid rushed decisions late at night."
+      - label: "Prefer options that support seatbelt use and safer driving behavior."
+    sourceRefs: ["who_injury_prevention", "cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_helmets_and_seatbelts"
+    title: "Use helmets and seatbelts every time"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "high"
+    timing: "during_travel"
+    tags: ["helmets", "seatbelts", "road-safety"]
+    relatedModules: []
+    summary: "Protective gear and restraint use should be non-negotiable during travel."
+    whyThisMatters: "Consistent use can significantly lower severe injury risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Avoid riding in vehicles where seatbelts are unavailable."
+      - label: "Do not ride scooters or motorcycles without a helmet."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_heat_and_sun_protection"
+    title: "Prevent heat illness and sun injury"
+    pillar: "prevention"
+    urgency: "important"
+    priority: "medium"
+    timing: "both"
+    tags: ["heat", "sun", "hydration"]
+    relatedModules: ["food_water_safety"]
+    summary: "Plan activity timing, hydration, and shade to lower heat-related risk."
+    whyThisMatters: "Heat stress can escalate quickly in unfamiliar climates."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Schedule intense activity outside peak heat hours when practical."
+      - label: "Use sun protection and increase fluids in hot conditions."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_alcohol_risk_awareness"
+    title: "Use extra caution with alcohol"
+    pillar: "prevention"
+    urgency: "routine"
+    priority: "medium"
+    timing: "during_travel"
+    tags: ["alcohol", "night-safety", "decision-making"]
+    relatedModules: []
+    summary: "Alcohol can increase injury risk in transport, water, and unfamiliar settings."
+    whyThisMatters: "Impaired judgment can lead to preventable incidents."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Set a transport plan before social events."
+      - label: "Avoid high-risk activities after drinking."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_activity_fit_and_gear"
+    title: "Match activities to your skills and gear"
+    pillar: "prevention"
+    urgency: "routine"
+    priority: "medium"
+    timing: "during_travel"
+    tags: ["activity-safety", "outdoors", "planning"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Choose activities that fit your experience and use proper equipment."
+    whyThisMatters: "Overestimating conditions or preparedness can increase injury risk."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Check conditions and required gear before activity start."
+      - label: "Skip activities when conditions exceed your comfort or training."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_walking_and_night_movement"
+    title: "Move more safely at night and in unfamiliar areas"
+    pillar: "prevention"
+    urgency: "routine"
+    priority: "low"
+    timing: "during_travel"
+    tags: ["walking", "night-safety", "situational-awareness"]
+    relatedModules: []
+    summary: "Use simple habits that improve visibility and situational awareness."
+    whyThisMatters: "Falls, collisions, and unsafe encounters can increase after dark."
+    whenToDoIt: "duringTravel"
+    steps:
+      - label: "Use well-lit routes and avoid distraction while walking."
+      - label: "Travel with others when possible in unfamiliar areas."
+    sourceRefs: ["who_injury_prevention"]
+    lastReviewed: "2026-03-17"
+
+  - id: "injury_plan_help_access"
+    title: "Plan how to get help quickly if injured"
+    pillar: "preparedness"
+    urgency: "important"
+    priority: "high"
+    timing: "before_travel"
+    tags: ["emergency", "care-access", "planning"]
+    relatedModules: ["pretravel_readiness"]
+    summary: "Save contacts and care locations before you need urgent support."
+    whyThisMatters: "Preparation helps you act faster when injuries occur."
+    whenToDoIt: "beforeTravel"
+    steps:
+      - label: "Save one urgent care and one emergency hospital option."
+      - label: "Keep local emergency numbers available offline."
+    sourceRefs: ["cdc_travel_health_general"]
+    lastReviewed: "2026-03-17"

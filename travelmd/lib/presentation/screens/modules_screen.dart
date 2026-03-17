@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:travelmd/domain/catalog/module_category.dart';
 import 'package:travelmd/domain/modules/module_definition.dart';
 import 'package:travelmd/domain/modules/module_stream.dart';
 import 'package:travelmd/presentation/providers/app_providers.dart';
@@ -19,12 +20,12 @@ class ModulesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final preventionModules = ref.watch(preventionModulesProvider);
-    final incidentModules = ref.watch(incidentModulesProvider);
+    final preventionCategories = ref.watch(preventionCategoriesProvider);
+    final incidentCategories = ref.watch(incidentCategoriesProvider);
 
     final orderedSections = _buildOrderedSections(
-      preventionModules: preventionModules,
-      incidentModules: incidentModules,
+      preventionCategories: preventionCategories,
+      incidentCategories: incidentCategories,
     );
 
     return Scaffold(
@@ -44,7 +45,7 @@ class ModulesScreen extends ConsumerWidget {
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  'Browse travel health modules by stream and continue into the matching workflow.',
+                  'Browse public travel health categories and continue into the most relevant topic flow.',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -65,7 +66,7 @@ class ModulesScreen extends ConsumerWidget {
                           : null,
                   ),
                     const SizedBox(height: AppSpacing.sm),
-                    if (section.modules.isEmpty)
+                    if (section.categories.isEmpty)
                       EmptyStateCard(
                         icon: section.stream == ModuleStream.prevention
                             ? Icons.shield_outlined
@@ -74,12 +75,11 @@ class ModulesScreen extends ConsumerWidget {
                         message: section.emptyMessage,
                       )
                     else
-                      ...section.modules.map(
-                        (module) => Padding(
+                      ...section.categories.map(
+                        (category) => Padding(
                           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                          child: _ModuleTile(
-                            module: module,
-                            stream: section.stream,
+                          child: _CategoryTile(
+                            category: category,
                           ),
                         ),
                       ),
@@ -94,25 +94,25 @@ class ModulesScreen extends ConsumerWidget {
   }
 
   List<_ModuleSection> _buildOrderedSections({
-    required List<ModuleDefinition> preventionModules,
-    required List<ModuleDefinition> incidentModules,
+    required List<ModuleCategory> preventionCategories,
+    required List<ModuleCategory> incidentCategories,
   }) {
     final sections = <_ModuleSection>[
       _ModuleSection(
         stream: ModuleStream.prevention,
-        title: 'Prevention Modules',
-        subtitle: 'Prepare ahead with prevention and preparedness guidance.',
-        emptyTitle: 'No prevention modules available',
-        emptyMessage: 'Enabled prevention topics will appear here.',
-        modules: preventionModules,
+        title: 'Prevention Categories',
+        subtitle: 'Start with broad, practical ways to stay safer while traveling.',
+        emptyTitle: 'No prevention categories available',
+        emptyMessage: 'Public prevention categories will appear here.',
+        categories: preventionCategories,
       ),
       _ModuleSection(
         stream: ModuleStream.incidentResponse,
-        title: 'Incident Help Modules',
-        subtitle: 'Get fast guidance after an exposure or incident.',
-        emptyTitle: 'No incident help modules available',
-        emptyMessage: 'Enabled incident-response topics will appear here.',
-        modules: incidentModules,
+        title: 'If Something Happens',
+        subtitle: 'Get action-oriented help after an exposure or incident.',
+        emptyTitle: 'No incident categories available',
+        emptyMessage: 'Public incident-help categories will appear here.',
+        categories: incidentCategories,
       ),
     ];
 
@@ -139,7 +139,7 @@ class _ModuleSection {
   final String subtitle;
   final String emptyTitle;
   final String emptyMessage;
-  final List<ModuleDefinition> modules;
+  final List<ModuleCategory> categories;
 
   const _ModuleSection({
     required this.stream,
@@ -147,25 +147,25 @@ class _ModuleSection {
     required this.subtitle,
     required this.emptyTitle,
     required this.emptyMessage,
-    required this.modules,
+    required this.categories,
   });
 }
 
-class _ModuleTile extends ConsumerWidget {
-  final ModuleDefinition module;
-  final ModuleStream stream;
+class _CategoryTile extends ConsumerWidget {
+  final ModuleCategory category;
 
-  const _ModuleTile({
-    required this.module,
-    required this.stream,
+  const _CategoryTile({
+    required this.category,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final modules = ref.watch(modulesByCategoryProvider(category.id));
+
     return SurfaceCard(
-      key: Key('module-tile-${stream.name}-${module.id}'),
+      key: Key('category-tile-${category.id}'),
       child: InkWell(
-        onTap: () => _openModule(context, ref),
+        onTap: () => _openCategory(context, ref, modules),
         borderRadius: BorderRadius.circular(12),
         child: Padding(
           padding: EdgeInsets.zero,
@@ -179,7 +179,7 @@ class _ModuleTile extends ConsumerWidget {
                   color: AppColors.brandSoft,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Icon(_iconForKey(module.iconKey), color: AppColors.brand),
+                child: Icon(_iconForKey(category.iconKey), color: AppColors.brand),
               ),
               const SizedBox(width: AppSpacing.md),
               Expanded(
@@ -187,7 +187,7 @@ class _ModuleTile extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      module.title,
+                      category.title,
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium
@@ -195,7 +195,7 @@ class _ModuleTile extends ConsumerWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      module.description,
+                      category.shortDescription,
                       style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     const SizedBox(height: AppSpacing.sm),
@@ -203,16 +203,24 @@ class _ModuleTile extends ConsumerWidget {
                       spacing: 8,
                       runSpacing: 8,
                       children: [
-                        for (final supportedStream in module.supportedStreams)
-                          InfoChip(
-                            label: _streamLabel(supportedStream),
-                            icon: supportedStream == ModuleStream.prevention
-                                ? Icons.shield_outlined
-                                : Icons.warning_amber_rounded,
-                            color: supportedStream == ModuleStream.prevention
-                                ? AppColors.brand
-                                : Colors.orange.shade700,
-                          ),
+                        InfoChip(
+                          label: _streamLabel(category.primaryStream),
+                          icon: category.primaryStream == ModuleStream.prevention
+                              ? Icons.shield_outlined
+                              : Icons.warning_amber_rounded,
+                          color: category.primaryStream == ModuleStream.prevention
+                              ? AppColors.brand
+                              : Colors.orange.shade700,
+                        ),
+                        InfoChip(
+                          label: modules.isEmpty
+                              ? 'Coming soon'
+                              : modules.length == 1
+                                  ? '1 topic'
+                                  : '${modules.length} topics',
+                          icon: Icons.topic_outlined,
+                          color: AppColors.textSecondary,
+                        ),
                       ],
                     ),
                   ],
@@ -227,10 +235,25 @@ class _ModuleTile extends ConsumerWidget {
     );
   }
 
-  void _openModule(BuildContext context, WidgetRef ref) {
-    if (stream == ModuleStream.prevention) {
+  void _openCategory(
+    BuildContext context,
+    WidgetRef ref,
+    List<ModuleDefinition> modules,
+  ) {
+    if (modules.isEmpty) {
+      context.go('/modules/category/${category.id}');
+      return;
+    }
+
+    if (modules.length > 1) {
+      context.go('/modules/category/${category.id}');
+      return;
+    }
+
+    final module = modules.first;
+    if (category.primaryStream == ModuleStream.prevention) {
       ref.read(selectedPreventionModuleIdProvider.notifier).state = module.id;
-      context.go('/modules/${module.id}?stream=${stream.name}');
+      context.go('/modules/${module.id}?stream=prevention');
       return;
     }
 
@@ -254,6 +277,12 @@ IconData _iconForKey(String iconKey) {
       return Icons.pets;
     case 'bug_report':
       return Icons.bug_report;
+    case 'luggage':
+      return Icons.luggage;
+    case 'restaurant':
+      return Icons.restaurant;
+    case 'emergency':
+      return Icons.emergency;
     default:
       return Icons.health_and_safety;
   }

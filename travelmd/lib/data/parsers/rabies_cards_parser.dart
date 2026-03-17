@@ -1,5 +1,7 @@
 import 'package:yaml/yaml.dart';
 import 'package:travelmd/domain/models/guidance_card.dart';
+import 'package:travelmd/domain/enums/card_priority.dart';
+import 'package:travelmd/domain/enums/content_timing.dart';
 import 'package:travelmd/domain/enums/urgency.dart';
 import 'package:travelmd/domain/enums/when_to_do.dart';
 
@@ -10,6 +12,8 @@ class RabiesCardsParser {
   static const List<String> validPillars = ['prevention', 'preparedness', 'exposure_response'];
   static const List<String> validUrgencies = ['routine', 'important', 'urgent'];
   static const List<String> validWhenToDo = ['now', 'beforeTravel', 'duringTravel', 'afterTravel'];
+  static const List<String> validPriorities = ['high', 'medium', 'low'];
+  static const List<String> validTiming = ['before_travel', 'during_travel', 'both'];
 
   Urgency _parseUrgency(String value) {
     return Urgency.values.firstWhere(
@@ -23,6 +27,59 @@ class RabiesCardsParser {
       (e) => e.name == value,
       orElse: () => throw FormatException('Invalid whenToDoIt: "$value". Must be one of ${WhenToDo.values.map((e) => e.name).join(", ")}'),
     );
+  }
+
+  CardPriority _parsePriority(String value) {
+    switch (value) {
+      case 'high':
+        return CardPriority.high;
+      case 'medium':
+        return CardPriority.medium;
+      case 'low':
+        return CardPriority.low;
+      default:
+        throw FormatException(
+          'Invalid priority: "$value". Must be one of ${validPriorities.join(", ")}',
+        );
+    }
+  }
+
+  ContentTiming _parseTiming(String value) {
+    switch (value) {
+      case 'before_travel':
+        return ContentTiming.beforeTravel;
+      case 'during_travel':
+        return ContentTiming.duringTravel;
+      case 'both':
+        return ContentTiming.both;
+      default:
+        throw FormatException(
+          'Invalid timing: "$value". Must be one of ${validTiming.join(", ")}',
+        );
+    }
+  }
+
+  CardPriority _defaultPriorityForUrgency(Urgency urgency) {
+    switch (urgency) {
+      case Urgency.urgent:
+        return CardPriority.high;
+      case Urgency.important:
+        return CardPriority.medium;
+      case Urgency.routine:
+        return CardPriority.low;
+    }
+  }
+
+  ContentTiming _defaultTimingForWhenToDo(WhenToDo whenToDo) {
+    switch (whenToDo) {
+      case WhenToDo.beforeTravel:
+        return ContentTiming.beforeTravel;
+      case WhenToDo.duringTravel:
+        return ContentTiming.duringTravel;
+      case WhenToDo.now:
+      case WhenToDo.afterTravel:
+        return ContentTiming.both;
+    }
   }
 
   /// Parse YAML string into a list of GuidanceCard objects.
@@ -49,6 +106,11 @@ class RabiesCardsParser {
       final summary = cardData['summary'] as String?;
       final whyThisMatters = cardData['whyThisMatters'] as String?;
       final whenToDoItStr = cardData['whenToDoIt'] as String?;
+        final tags = (cardData['tags'] as YamlList?)?.cast<String>() ?? const [];
+        final priorityStr = cardData['priority'] as String?;
+        final timingStr = cardData['timing'] as String?;
+        final relatedModules =
+          (cardData['relatedModules'] as YamlList?)?.cast<String>() ?? const [];
       final stepsNode = cardData['steps'] as YamlList?;
       final sourceRefs = (cardData['sourceRefs'] as YamlList?)?.cast<String>() ?? [];
       final lastReviewed = cardData['lastReviewed'] as String?;
@@ -70,6 +132,12 @@ class RabiesCardsParser {
 
       final urgency = _parseUrgency(urgencyStr);
       final whenToDoIt = _parseWhenToDo(whenToDoItStr);
+        final priority = priorityStr == null
+          ? _defaultPriorityForUrgency(urgency)
+          : _parsePriority(priorityStr);
+        final timing = timingStr == null
+          ? _defaultTimingForWhenToDo(whenToDoIt)
+          : _parseTiming(timingStr);
 
       // Validate lastReviewed format
       if (!RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(lastReviewed)) {
@@ -109,6 +177,10 @@ class RabiesCardsParser {
         id: id,
         title: title,
         urgency: urgency,
+        priority: priority,
+        timing: timing,
+        tags: tags,
+        relatedModules: relatedModules,
         summary: summary,
         whyThisMatters: whyThisMatters,
         whenToDoIt: whenToDoIt,

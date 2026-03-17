@@ -39,3 +39,23 @@ sources:
     organization: "Centers for Disease Control and Prevention (CDC)"
     url: "https://www.cdc.gov/malaria/travelers/index.html"
     lastReviewed: "2026-03-15"
+  cdc_travel_health_general:
+    title: "Travelers' Health"
+    organization: "Centers for Disease Control and Prevention (CDC)"
+    url: "https://wwwnc.cdc.gov/travel"
+    lastReviewed: "2026-03-17"
+  who_food_safety:
+    title: "Food safety"
+    organization: "World Health Organization (WHO)"
+    url: "https://www.who.int/health-topics/food-safety"
+    lastReviewed: "2026-03-17"
+  who_drinking_water:
+    title: "Drinking-water"
+    organization: "World Health Organization (WHO)"
+    url: "https://www.who.int/news-room/fact-sheets/detail/drinking-water"
+    lastReviewed: "2026-03-17"
+  who_injury_prevention:
+    title: "Injuries and violence"
+    organization: "World Health Organization (WHO)"
+    url: "https://www.who.int/teams/social-determinants-of-health/safety-and-mobility"
+    lastReviewed: "2026-03-17"

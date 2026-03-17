@@ -22,6 +22,9 @@ class ContentRepository {
   Future<Map<String, bool>>? _malariaRelevantCache;
   Future<List<GuidanceCard>>? _rabiesCardsCache;
   Future<List<GuidanceCard>>? _malariaCardsCache;
+  Future<List<GuidanceCard>>? _pretravelReadinessCardsCache;
+  Future<List<GuidanceCard>>? _foodWaterSafetyCardsCache;
+  Future<List<GuidanceCard>>? _travelInjuryPreventionCardsCache;
 
   ContentRepository({
     YamlAssetLoader? assetLoader,
@@ -38,6 +41,9 @@ class ContentRepository {
       _loadMalariaRelevant(),
       _loadRabiesCards(),
       _loadMalariaCards(),
+      _loadPretravelReadinessCards(),
+      _loadFoodWaterSafetyCards(),
+      _loadTravelInjuryPreventionCards(),
     ]);
   }
 
@@ -106,6 +112,57 @@ class ContentRepository {
     return await _malariaCardsCache!;
   }
 
+  Future<List<GuidanceCard>> _loadPretravelReadinessCards() async {
+    _pretravelReadinessCardsCache ??= (() async {
+      final yaml = await _assetLoader.loadAssetYaml('assets/content/pretravel_readiness_public.yaml');
+      final cards = _cardsParser.parse(yaml);
+      final sources = await _loadSources();
+      for (final card in cards) {
+        for (final ref in card.sourceRefs) {
+          if (!sources.containsKey(ref)) {
+            throw FormatException('Card "${card.id}" references unknown source "$ref"');
+          }
+        }
+      }
+      return cards;
+    })();
+    return await _pretravelReadinessCardsCache!;
+  }
+
+  Future<List<GuidanceCard>> _loadFoodWaterSafetyCards() async {
+    _foodWaterSafetyCardsCache ??= (() async {
+      final yaml = await _assetLoader.loadAssetYaml('assets/content/food_water_safety_public.yaml');
+      final cards = _cardsParser.parse(yaml);
+      final sources = await _loadSources();
+      for (final card in cards) {
+        for (final ref in card.sourceRefs) {
+          if (!sources.containsKey(ref)) {
+            throw FormatException('Card "${card.id}" references unknown source "$ref"');
+          }
+        }
+      }
+      return cards;
+    })();
+    return await _foodWaterSafetyCardsCache!;
+  }
+
+  Future<List<GuidanceCard>> _loadTravelInjuryPreventionCards() async {
+    _travelInjuryPreventionCardsCache ??= (() async {
+      final yaml = await _assetLoader.loadAssetYaml('assets/content/travel_injury_prevention_public.yaml');
+      final cards = _cardsParser.parse(yaml);
+      final sources = await _loadSources();
+      for (final card in cards) {
+        for (final ref in card.sourceRefs) {
+          if (!sources.containsKey(ref)) {
+            throw FormatException('Card "${card.id}" references unknown source "$ref"');
+          }
+        }
+      }
+      return cards;
+    })();
+    return await _travelInjuryPreventionCardsCache!;
+  }
+
   /// Get a source by ID.
   Future<Map<String, dynamic>?> getSource(String sourceId) async {
     final sources = await _loadSources();
@@ -150,5 +207,17 @@ class ContentRepository {
   /// Get all malaria guidance cards.
   Future<List<GuidanceCard>> getMalariaCards() async {
     return await _loadMalariaCards();
+  }
+
+  Future<List<GuidanceCard>> getPretravelReadinessCards() async {
+    return await _loadPretravelReadinessCards();
+  }
+
+  Future<List<GuidanceCard>> getFoodWaterSafetyCards() async {
+    return await _loadFoodWaterSafetyCards();
+  }
+
+  Future<List<GuidanceCard>> getTravelInjuryPreventionCards() async {
+    return await _loadTravelInjuryPreventionCards();
   }
 }

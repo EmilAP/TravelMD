@@ -66,4 +66,41 @@ void main() {
       expect(cardIds, contains('malaria_prevent_discuss_medication'));
     });
   });
+
+  test('pretravel_readiness route requires trip setup without context', () {
+    final container = ProviderContainer();
+    addTearDown(container.dispose);
+
+    final route = container.read(preventionEntryRouteProvider('pretravel_readiness'));
+    expect(route, '/trip');
+  });
+
+  test('pretravel_readiness module generates module-focused prevention plan', () async {
+    final container = ProviderContainer(
+      overrides: [
+        contentRepositoryProvider.overrideWithValue(createTestContentRepository()),
+      ],
+    );
+    addTearDown(container.dispose);
+
+    container.read(selectedPreventionModuleIdProvider.notifier).state = 'pretravel_readiness';
+    container.read(tripProvider.notifier).setTrip(
+          Trip(
+            originCountry: 'USA',
+            destinationCountry: 'JPN',
+            departDate: DateTime(2026, 6, 1),
+            returnDate: DateTime(2026, 6, 20),
+          ),
+        );
+    container.read(travelerProvider.notifier).setTraveler(
+          TravelerProfile(ageYears: 34),
+        );
+
+    final plan = await container.read(preventionPlanProvider.future);
+    final cardIds = plan.cards.map((card) => card.id).toList();
+
+    expect(plan.title, 'Prepare Before You Go Prevention Plan');
+    expect(cardIds, contains('pretravel_visit_early'));
+    expect(cardIds, contains('pretravel_save_emergency_contacts'));
+  });
 }
