@@ -5,9 +5,10 @@ import 'package:travelmd/data/storage/entities/trip_entity.dart';
 import 'package:travelmd/data/storage/entities/traveler_entity.dart';
 import 'package:travelmd/data/storage/entities/plan_selection_entity.dart';
 import 'package:travelmd/data/storage/entities/checklist_state_entity.dart';
+import 'package:travelmd/data/storage/storage_repository_base.dart';
 
 /// Repository for persisting and retrieving trip, traveler, and plan data.
-class StorageRepository {
+class StorageRepository implements StorageRepositoryBase {
   final Isar _isar;
 
   StorageRepository(this._isar);
@@ -158,13 +159,19 @@ class StorageRepository {
   }
 
   /// Load plan selection for a trip+traveler pair.
-  Future<PlanSelectionEntity?> loadPlanSelection({
+  Future<StoredPlanSelection?> loadPlanSelection({
     required int tripId,
     required int travelerId,
   }) async {
     final all = await _isar.planSelectionEntitys.where().findAll();
     try {
-      return all.firstWhere((e) => e.tripId == tripId && e.travelerId == travelerId);
+      final entity = all.firstWhere((e) => e.tripId == tripId && e.travelerId == travelerId);
+      return StoredPlanSelection(
+        id: entity.id,
+        tripId: entity.tripId,
+        travelerId: entity.travelerId,
+        selectedCardIds: List.unmodifiable(entity.selectedCardIds),
+      );
     } catch (e) {
       return null;
     }

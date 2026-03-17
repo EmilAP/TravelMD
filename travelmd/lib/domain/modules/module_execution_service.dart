@@ -2,6 +2,7 @@ import 'package:travelmd/data/repositories/content_repository.dart';
 import 'package:travelmd/domain/models/traveler_profile.dart';
 import 'package:travelmd/domain/models/trip.dart';
 import 'package:travelmd/domain/modules/module_evaluation_result.dart';
+import 'package:travelmd/domain/modules/module_registration.dart';
 import 'package:travelmd/domain/modules/module_registry.dart';
 import 'package:travelmd/domain/modules/module_stream.dart';
 

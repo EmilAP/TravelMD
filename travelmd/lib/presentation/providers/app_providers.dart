@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:travelmd/data/repositories/content_repository.dart';
-import 'package:travelmd/data/storage/isar_service.dart';
-import 'package:travelmd/data/storage/storage_repository.dart';
+import 'package:travelmd/data/storage/storage_repository_base.dart';
+import 'package:travelmd/data/storage/storage_repository_factory.dart';
 import 'package:travelmd/domain/models/trip.dart';
 import 'package:travelmd/domain/models/traveler_profile.dart';
 import 'package:travelmd/domain/models/public_plan.dart';
@@ -12,9 +12,8 @@ import 'package:travelmd/domain/modules/module_registry.dart';
 import 'package:travelmd/presentation/providers/module_catalog_providers.dart';
 
 /// Storage repository provider (async, initializes Isar).
-final storageRepositoryProvider = FutureProvider<StorageRepository>((ref) async {
-  final isar = await IsarService.getInstance();
-  return StorageRepository(isar);
+final storageRepositoryProvider = FutureProvider<StorageRepositoryBase>((ref) async {
+  return createStorageRepository();
 });
 
 /// Content repository (singleton, loads YAML once).
